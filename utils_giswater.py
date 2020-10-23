@@ -395,7 +395,7 @@ def get_item_data(dialog, widget, index=0, add_quote=False):
     return code
 
 
-def set_combo_itemData(combo, value, item1):
+def set_combo_itemData(combo, value, item1=0):
     """ Set text to combobox populate with more than 1 item for row
         @item1: element to compare
         @item2: element to show

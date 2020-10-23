@@ -126,6 +126,11 @@ class ElementUi(GwDialog, FORM_CLASS):
     pass
 
 
+FORM_CLASS = get_ui_class('composers_pages.ui')
+class CompPagesUi(GwDialog, FORM_CLASS):
+    pass
+
+
 FORM_CLASS = get_ui_class('visit.ui')
 class VisitUi(GwDialog, FORM_CLASS):
     pass

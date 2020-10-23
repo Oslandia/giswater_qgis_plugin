@@ -18,6 +18,7 @@ from functools import partial
 from .. import utils_giswater
 from .api_config import ApiConfig
 from .api_manage_composer import ApiManageComposer
+from .print_composers_pages import PrintCompoPages
 from .check_project_result import CheckProjectResult
 from .gw_toolbox import GwToolBox
 from .parent import ParentAction
@@ -385,3 +386,8 @@ class Utils(ParentAction):
         self.check_project_result = CheckProjectResult(self.iface, self.settings, self.controller, self.plugin_dir)
         self.check_project_result.populate_audit_check_project(layers, "false")
 
+
+    def print_auto_composers(self):
+        """ Button 60: Print composer pages automatically """
+        pac = PrintCompoPages(self.iface, self.settings, self.controller, self.plugin_dir)
+        pac.open_composers_dialog()

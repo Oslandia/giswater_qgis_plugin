@@ -561,17 +561,6 @@ class ApiSearch(ApiParent):
         utils_giswater.remove_tab_by_tabName(dlg_docman.tabWidget, 'tab_rel')
 
 
-    def get_current_selectors(self):
-        """ Take the current selector_expl and selector_state to restore them at the end of the operation """
-
-        current_tab = self.controller.plugin_settings_value(f"dlg_selector_basic")
-        form = f'"currentTab":"{current_tab}"'
-        extras = f'"selectorType":"selector_basic", "filterText":""'
-        body = self.create_body(form=form, extras=extras)
-        json_result = self.controller.get_json('gw_fct_getselectors', body)
-        return json_result
-
-
     def force_expl(self, workcat_id):
         """ Active exploitations are compared with workcat farms.
             If there is consistency nothing happens, if there is no consistency force this exploitations to selector."""
@@ -598,27 +587,7 @@ class ApiSearch(ApiParent):
             self.controller.show_info(msg)
 
 
-    def restore_selectors(self, current_selectors):
-        """ Restore selector_expl and selector_state to how the user had it """
-        qgis_project_add_schema = self.controller.plugin_settings_value('gwAddSchema')
-        for form_tab in current_selectors['body']['form']['formTabs']:
-            if form_tab['tableName'] not in ('selector_expl', 'selector_state'):
-                continue
-            selector_type = form_tab['selectorType']
-            tab_name = form_tab['tabName']
-            if form_tab['tableName'] == 'selector_expl':
-                field_id = 'expl_id'
-            elif form_tab['tableName'] == 'selector_state':
-                field_id = 'id'
-            for field in form_tab['fields']:
-                _id = field[field_id]
-                extras = (f'"selectorType":"{selector_type}", "tabName":"{tab_name}", '
-                          f'"id":"{_id}", "isAlone":"False", "value":"{field["value"]}", '
-                          f'"addSchema":"{qgis_project_add_schema}"')
-                body = self.create_body(extras=extras)
-                self.controller.get_json('gw_fct_setselectors', body)
-                
-        self.refresh_map_canvas()
+
 
 
     def update_selector_workcat(self, workcat_id):

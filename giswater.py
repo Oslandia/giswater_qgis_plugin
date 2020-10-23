@@ -208,7 +208,7 @@ class Giswater(QObject):
                 callback_function = getattr(self.master, function_name)
                 action.triggered.connect(callback_function)
             # Utils toolbar actions
-            elif int(index_action) in (206, 58, 83, 99, 59):
+            elif int(index_action) in (206, 58, 83, 99, 59, 60):
                 callback_function = getattr(self.utils, function_name)
                 action.triggered.connect(callback_function)
             # Tm Basic toolbar actions
@@ -325,7 +325,7 @@ class Giswater(QObject):
             return None
 
         # Buttons NOT checkable (normally because they open a form)
-        list_actions = (18, 23, 25, 26, 27, 29, 33, 34, 45, 46, 50, 58, 59, 86, 64, 65, 66,
+        list_actions = (18, 23, 25, 26, 27, 29, 33, 34, 45, 46, 50, 58, 59, 60, 86, 64, 65, 66,
                         67, 68, 69, 74, 75, 76, 81, 82, 83, 84, 98, 99, 142, 143, 206, 301, 302, 303, 304, 305, 309)
 
         if int(index_action) in list_actions:
@@ -413,7 +413,7 @@ class Giswater(QObject):
 
         list_actions = None
         if self.controller.get_project_type() in ('ws', 'ud'):
-            list_actions = ['206', '99', '83', '58', '59']
+            list_actions = ['206', '99', '83', '58', '59', '60']
         elif self.controller.get_project_type() in ('tm', 'pl'):
             list_actions = ['206', '99', '83', '58']
         self.manage_toolbar(toolbar_id, list_actions)
