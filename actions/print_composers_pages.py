@@ -136,7 +136,7 @@ class PrintCompoPages(ApiParent):
                 extras = f'"selectorType":"selector_basic", "tabName":"tab_psector", "id":{_id}, "value":true, '
                 extras += f'"isAlone":true, "addSchema":"NULL"'
                 body = self.create_body(extras=extras)
-                result = self.controller.get_json("gw_fct_setselectors", body, commit=True)
+                res = self.controller.get_json("gw_fct_setselectors", body, commit=True)
                 self.export_to_pdf(layout, path + f"\\{prefix}{name}.pdf")
                 action = designer_window.findChild(QAction, 'mActionAtlasNext')
                 action.trigger()
@@ -162,11 +162,7 @@ class PrintCompoPages(ApiParent):
             try:
                 exporter = QgsLayoutExporter(layout)
                 exporter.exportToPdf(path, QgsLayoutExporter.PdfExportSettings())
-                if os.path.exists(path):
-                    message = "Document PDF created in"
-                    self.controller.show_info(message, parameter=path)
-                    os.startfile(path)
-                else:
+                if not os.path.exists(path):
                     message = "Cannot create file, check if its open"
                     self.controller.show_warning(message, parameter=path)
             except Exception as e:
